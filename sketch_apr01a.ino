@@ -97,7 +97,7 @@ void loop()
       BPMTiming=true;
     }
   }
-  if((value<LowerThreshold)&(BPMTiming))
+  if((value<LowerThreshold)&&(BPMTiming))
     beatComplete=true;
     
   //update the display every 1 s with the updateDisplay method
