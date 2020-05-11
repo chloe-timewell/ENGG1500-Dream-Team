@@ -1,0 +1,68 @@
+
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(115200);
+  pinMode(A0, INPUT);
+  pinMode(0, OUTPUT);
+  pinMode(1, INPUT);
+  
+  Wire.setClock(1000000);
+
+  //intitalise display
+  display.begin(SSD1306_SWITCHCAPVCC, OLED_ADDR);
+  display.clearDisplay();
+}
+
+int lastTimeBPM = 0;
+int thisTimeBPM;
+int BPM = 0;
+
+double heartMonitor = 0;
+unsigned long time = 0;
+double hold1, hold2, hold3, average;
+double potentiometre = 0;
+double period = 0;
+double aboveThreshold = 0;
+double pauseTime = 0;
+
+// prototype code count of the number of times the heart rate was lower than 40BPM record the time when this happened for time stamp. 
+// Determine number of pauses. 
+// Set min bpm depending on the person
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+thisTimeBPM=millis();
+  
+  // if BPM<40 
+  // serial.display("heart rate is too low, BPM is (insert BPM)");
+  
+  BPM=thisTimeBPM-lastTimeBPM;
+  BPM=int(60/(float(BPM)/1000));
+  
+  if (BPM<=40) {
+    display.print("The BPM is very low");
+    measureWave(); // this function should print out the BPM value
+    Serial.write(10); // time stamp ASCII 10
+    //delay(1000); i dont think this is needed
+  }
+  else if BPM>100
+  display.print{"heart rate is too high for low activity");
+  measureWave();
+  serial.write(10);
+  else 
+  mesaureWave();
+
+// pause time 
+// AVERAGE HEART BEAT IS .5 SECONDS
+// time between t and p. of PQRST
+pauseTime = BMP - (BMP*0.5);
+display.print("Your pause time is");
+display.print(pauseTime);
+
+//pause time
+//calcuate time of beatComplete and relplace the .5
